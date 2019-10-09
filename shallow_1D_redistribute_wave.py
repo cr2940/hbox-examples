@@ -72,7 +72,7 @@ def riemanntype(hL, hR, uL, uR, maxiter, drytol, g):
         elif (F_max <= 0.0): # !2 shocks
             # root finding using a Newton iteration on sqrt(h)===
             h0 = h_max
-            for iter in xrange(maxiter):
+            for iter in range(maxiter):
                 gL = np.sqrt(0.5 * g * (1 / h0 + 1 / hL))
                 gR = np.sqrt(0.5 * g * (1 / h0 + 1 / hR))
                 F0 = delu + (h0 - hL) * gL + (h0 - hR) * gR
@@ -91,7 +91,7 @@ def riemanntype(hL, hR, uL, uR, maxiter, drytol, g):
 
         else: #one shock one rarefaction
             h0 = h_min
-            for iter in xrange(maxiter):
+            for iter in range(maxiter):
                 F0 = delu + 2.0 * (np.sqrt(g * h0) - np.sqrt(g * h_max)) + (h0 - h_min) * np.sqrt(0.5 * g * (1 / h0 + 1 / h_min))
                 slope = (F_max - F0) / (h_max - h_min)
                 h0 = h0 - F0 / slope
@@ -161,8 +161,8 @@ def shallow_fwave_1d(q_l, q_r, aux_l, aux_r, problem_data):
     fwave[0,1,:] = beta2
     fwave[1,1,:] = beta2 * s[1,:]
 
-    for m in xrange(num_eqn):
-        for mw in xrange(num_waves):
+    for m in range(num_eqn):
+        for mw in range(num_waves):
             amdq[m,:] += (s[mw,:] < 0.0) * fwave[m,mw,:]
             apdq[m,:] += (s[mw,:] >= 0.0) * fwave[m,mw,:]
 
@@ -252,7 +252,7 @@ def redistribute_fwave(q_l, q_r, aux_l, aux_r, wall_height, drytol, g, maxiter):
     aux_wall_l = aux_wall[:,:-1]
     aux_wall_r = aux_wall[:,1:]
 
-    for i in xrange(2):
+    for i in range(2):
         hL = q_wall_l[0,i]
         hR = q_wall_r[0,i]
         huL = q_wall_l[1,i]
@@ -322,7 +322,7 @@ def redistribute_fwave(q_l, q_r, aux_l, aux_r, wall_height, drytol, g, maxiter):
             fwave[:,1,i] = fw[:,1] * wall[1]
             # print("fw: ", fw)
 
-            for mw in xrange(num_waves):
+            for mw in range(num_waves):
                 if (s[mw,i] < 0):
                     amdq[:,i] += fwave[:,mw,i]
                 elif (s[mw,i] > 0):
@@ -341,7 +341,7 @@ def redistribute_fwave(q_l, q_r, aux_l, aux_r, wall_height, drytol, g, maxiter):
 
     wave_wall = gamma
     # print("gamma[0,:]: ", gamma[0,:])
-    for mw in xrange(2):
+    for mw in range(2):
         if (s_wall[mw] < 0):
             amdq_wall[:] += gamma[:,mw]
         elif (s_wall[mw] > 0):
@@ -369,7 +369,7 @@ def shallow_fwave_dry_1d(q_l, q_r, aux_l, aux_r, problem_data):
     amdq = np.zeros((num_eqn, num_rp))
     apdq = np.zeros((num_eqn, num_rp))
 
-    for i in xrange(num_rp):
+    for i in range(num_rp):
         hL = q_l[0,i]
         hR = q_r[0,i]
         huL = q_l[1,i]
@@ -439,7 +439,7 @@ def shallow_fwave_dry_1d(q_l, q_r, aux_l, aux_r, problem_data):
             fwave[:,0,i] = fw[:,0] * wall[0]
             fwave[:,1,i] = fw[:,1] * wall[1]
 
-            for mw in xrange(num_waves):
+            for mw in range(num_waves):
                 if (s[mw,i] < 0):
                     amdq[:,i] += fwave[:,mw,i]
                 elif (s[mw,i] > 0):
@@ -500,7 +500,7 @@ def shallow_fwave_hbox_dry_1d(q_l, q_r, aux_l, aux_r, problem_data):
         aux_l[0,iw] = aux_hbox[0,0]
         aux_r[0,iw] = aux_hbox[0,1]
 
-        for i in xrange(num_rp):
+        for i in range(num_rp):
             hL = q_l[0,i]
             hR = q_r[0,i]
             huL = q_l[1,i]
@@ -571,7 +571,7 @@ def shallow_fwave_hbox_dry_1d(q_l, q_r, aux_l, aux_r, problem_data):
                 fwave[:,0,i] = fw[:,0] * wall[0]
                 fwave[:,1,i] = fw[:,1] * wall[1]
 
-                for mw in xrange(num_waves):
+                for mw in range(num_waves):
                     if (s[mw,i] < 0):
                         amdq[:,i] += fwave[:,mw,i]
                     elif (s[mw,i] > 0):
